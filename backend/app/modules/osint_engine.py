@@ -43,7 +43,7 @@ def get_dns_records(domain: str) -> dict:
 
 
 def check_reputation(domain: str, api_key: str = None) -> dict:
-    key = api_key or os.getenv("VIRUSTOTAL_API_KEY")
+    key = os.getenv("VIRUSTOTAL_API_KEY")
     if not key:
         return {"error": "VirusTotal API key not configured"}
 

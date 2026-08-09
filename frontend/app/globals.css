@@ -1,16 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
+@theme {
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #050505;
+  --color-bg-surface: #0A0A0A;
+  --color-bg-elevated: #0F0F0F;
 
-body {
-  background-color: #000000;
-  color: #A1A1AA;
-  font-family: 'Inter', sans-serif;
+  --color-accent: #22D3EE;
+  --color-accent-hover: #67E8F9;
+  --color-accent-muted: rgba(34, 211, 238, 0.12);
+  --color-accent-border: rgba(34, 211, 238, 0.30);
+
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  --color-status-success: #34D399;
+  --color-status-warning: #FBBF24;
+  --color-status-danger: #F87171;
+  --color-status-info: #22D3EE;
+
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --radius: 4px;
 }
 
-/* Subtle Technical Grid Overlay */
+body {
+  background: #000;
+  color: #A1A1AA;
+  font-family: "Inter", sans-serif;
+}
+
 .bg-grid {
   background-size: 56px 56px;
   background-image:
-          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+          linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
 }

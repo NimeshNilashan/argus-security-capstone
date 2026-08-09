@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import file_integrity, log_analyzer, osint, port_scanner
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

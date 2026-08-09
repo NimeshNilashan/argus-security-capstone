@@ -82,7 +82,6 @@ export default function OsintPage() {
             {/* Results Output */}
             {data && (
                 <div className="space-y-6">
-                    {/* Target Summary */}
                     <div className="flex items-center justify-between p-4 bg-bg-surface border border-border rounded font-mono text-xs">
                         <span className="text-muted">TARGET: <strong className="text-white">{data.target}</strong></span>
                         <StatusBadge status="Scan Complete" type="success" />
