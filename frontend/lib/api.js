@@ -1,16 +1,21 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 async function request(endpoint, options = {}) {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const isFormData = options.body instanceof FormData;
+    const headers = isFormData
+        ? { ...options.headers }
+        : { "Content-Type": "application/json", ...options.headers };
+
+    const config = {
         ...options,
-        headers: {
-            ...options.headers,
-        },
-    });
+        headers,
+    };
+
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || `HTTP Error: ${response.status}`);
+        throw new Error(errorData.detail || `Request failed with status ${response.status}`);
     }
 
     return response.json();
@@ -21,24 +26,21 @@ export const api = {
     postOsintRecon: (domain) =>
         request("/osint/recon", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ domain }),
         }),
 
     // Port Scanner
-    postPortScan: (target, max_port) =>
+    postPortScan: (target, maxPort) =>
         request("/port-scanner/scan", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ target, max_port: parseInt(max_port, 10) }),
+            body: JSON.stringify({ target, max_port: maxPort }),
         }),
 
     // Log Analyzer
-    postAnalyzeLogText: (log_text) =>
+    postAnalyzeLogText: (logText) =>
         request("/log-analyzer/analyze", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ log_text }),
+            body: JSON.stringify({ log_text: logText }),
         }),
 
     postAnalyzeLogFile: (formData) =>
@@ -47,10 +49,22 @@ export const api = {
             body: formData,
         }),
 
-    // File Integrity
-    postCheckIntegrity: (formData) =>
-        request("/file-integrity/check", {
+    // File Integrity (SHA-256 Only)
+    postGenerateHash: (formData) =>
+        request("/file-integrity/generate-hash", {
             method: "POST",
             body: formData,
         }),
-};
+
+    postVerifyHash: (formData) =>
+        request("/file-integrity/verify-hash", {
+            method: "POST",
+            body: formData,
+        }),
+
+    postCompareFiles: (formData) =>
+        request("/file-integrity/compare-files", {
+            method: "POST",
+            body: formData,
+        }),
+}
