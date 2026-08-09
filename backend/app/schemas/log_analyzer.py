@@ -1,11 +1,21 @@
-from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any
+from pydantic import BaseModel
 
+class LogAnalysisRequest(BaseModel):
+    log_text: str
 
-class LogAnalyzeRequest(BaseModel):
-    log_text: str = Field(..., description="Raw HTTP server log lines to analyze")
+class LogEntry(BaseModel):
+    ip: Optional[str] = None
+    timestamp: Optional[str] = None
+    method: Optional[str] = None
+    endpoint: Optional[str] = None
+    status_code: Optional[int] = None
+    raw: str
+    is_suspicious: bool = False
+    flag_reason: Optional[str] = None
 
-
-class LogAnalyzeResponse(BaseModel):
-    total_lines_analyzed: int
-    total_attacks_detected: int
-    findings: dict[str, list[str]]
+class LogAnalysisResponse(BaseModel):
+    total_entries: int
+    suspicious_count: int
+    ip_summary: Dict[str, int]
+    entries: List[LogEntry]
