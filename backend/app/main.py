@@ -1,34 +1,26 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import settings
-from app.routers import file_integrity, log_analyzer, osint, port_scanner
-from dotenv import load_dotenv
+# Import routers
+from app.routers import osint, port_scanner, log_analyzer, file_integrity
 
-load_dotenv()
+app = FastAPI(title="Argus Security Platform API", version="2.0")
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    docs_url="/docs",
-    redoc_url="/redoc"
-)
-
-# CORS Middleware Setup
+# Enable CORS for Next.js frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include Routers
-app.include_router(osint.router, prefix="/osint", tags=["OSINT Recon"])
-app.include_router(port_scanner.router, prefix="/port-scanner", tags=["Port Scanner"])
-app.include_router(log_analyzer.router, prefix="/log-analyzer", tags=["Log Analyzer"])
-app.include_router(file_integrity.router, prefix="/file-integrity", tags=["File Integrity"])
+# Register Router Modules
+app.include_router(osint.router)
+app.include_router(port_scanner.router)
+app.include_router(log_analyzer.router)
+app.include_router(file_integrity.router)
 
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok", "service": settings.PROJECT_NAME}
+@app.get("/")
+def root():
+    return {"status": "online", "system": "Argus Security Platform API v2.0"}
