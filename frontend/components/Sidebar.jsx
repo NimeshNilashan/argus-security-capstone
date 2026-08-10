@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-    { label: "Dashboard", path: "/dashboard" },
+    { label: "Dashboard", path: "/" },
     { label: "OSINT Recon", path: "/osint" },
     { label: "Port Scanner", path: "/port-scanner" },
     { label: "Log Analyzer", path: "/log-analyzer" },

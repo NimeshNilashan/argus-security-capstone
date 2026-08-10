@@ -22,7 +22,13 @@ async function request(endpoint, options = {}) {
 }
 
 export const api = {
-    // OSINT
+    // Dashboard Core Metrics
+    getDashboardStatus: () =>
+        request("/dashboard/status", {
+            method: "GET",
+        }),
+
+    // OSINT Recon
     postOsintRecon: (domain) =>
         request("/osint/recon", {
             method: "POST",
@@ -49,7 +55,7 @@ export const api = {
             body: formData,
         }),
 
-    // File Integrity (SHA-256 Only)
+    // File Integrity (SHA-256)
     postGenerateHash: (formData) =>
         request("/file-integrity/generate-hash", {
             method: "POST",
@@ -67,4 +73,4 @@ export const api = {
             method: "POST",
             body: formData,
         }),
-}
+};

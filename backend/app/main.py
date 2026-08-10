@@ -1,26 +1,34 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import routers
-from app.routers import osint, port_scanner, log_analyzer, file_integrity
+from app.routers import (
+    dashboard,
+    osint,
+    port_scanner,
+    log_analyzer,
+    file_integrity,
+)
 
-app = FastAPI(title="Argus Security Platform API", version="2.0")
+app = FastAPI(
+    title="Security Operations Toolkit API",
+    version="1.0.0",
+    description="Unified backend API for security operations and diagnostic modules.",
+)
 
-# Enable CORS for Next.js frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000","https://argus-security-capstone.onrender.com/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Register Router Modules
+app.include_router(dashboard.router)
 app.include_router(osint.router)
 app.include_router(port_scanner.router)
 app.include_router(log_analyzer.router)
 app.include_router(file_integrity.router)
 
 @app.get("/")
-def root():
-    return {"status": "online", "system": "Argus Security Platform API v2.0"}
+async def root():
+    return {"status": "ONLINE", "message": "Security Operations API Core operational."}

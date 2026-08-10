@@ -1,6 +1,5 @@
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Argus Security Platform",
@@ -15,7 +14,6 @@ export default function RootLayout({ children }) {
       <div className="relative z-10 flex">
         <Sidebar />
         <div className="flex-1 min-h-screen flex flex-col">
-          <Navbar />
           <main className="flex-1 ml-56 p-8 max-w-[1200px]">{children}</main>
         </div>
       </div>
